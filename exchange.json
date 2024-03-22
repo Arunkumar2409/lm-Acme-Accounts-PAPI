@@ -19,5 +19,9 @@
   "main": "accounts-papi.raml",
   "assetId": "lm-acme-accounts-papi",
   "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
-  "name": "lm-Acme-Accounts-PAPI"
+  "name": "lm-Acme-Accounts-PAPI",
+  "organizationId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
+  "apiVersion": "v1",
+  "tags": [],
+  "originalFormatVersion": "1.0"
 }
