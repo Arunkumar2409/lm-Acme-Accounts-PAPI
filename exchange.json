@@ -1,11 +1,4 @@
 {
-  "main": "accounts-papi.raml",
-  "name": "lm-Acme-Accounts-PAPI",
-  "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
-  "assetId": "lm-acme-accounts-papi",
-  "version": "1.0.0",
-  "classifier": "raml",
-  "tags": [],
   "dependencies": [
     {
       "version": "1.0.3",
@@ -18,7 +11,25 @@
       "assetId": "common-raml-fragments",
       "groupId": "c09b2cb2-1258-47d1-a4d1-41a9f7698f34",
       "provided": false
+    },
+    {
+      "version": "1.0.0",
+      "assetId": "lm-acme-common-raml-fragements",
+      "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
+      "provided": false
+    },
+    {
+      "version": "1.0.0",
+      "assetId": "lm-acme-account-cdm",
+      "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
+      "provided": false
     }
   ],
-  "descriptorVersion": "1.0.0"
+  "version": "1.0.0",
+  "descriptorVersion": "1.0.0",
+  "classifier": "raml",
+  "main": "accounts-papi.raml",
+  "assetId": "lm-acme-accounts-papi",
+  "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
+  "name": "lm-Acme-Accounts-PAPI"
 }
