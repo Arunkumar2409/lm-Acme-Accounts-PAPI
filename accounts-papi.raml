@@ -1,0 +1,50 @@
+#%RAML 1.0
+title: Accounts Process API
+version: v1
+description: This API will be consumed by Mobile Accounts EAPI to perform Country lookup.
+mediaType: application/json
+
+documentation:
+  - !include documentation/documentation.raml
+
+uses:
+  coreLib: /exchange_modules/c09b2cb2-1258-47d1-a4d1-41a9f7698f34/common-raml-fragments/1.0.7/common-raml-fragments.raml
+  accountCDMLib: /exchange_modules/c09b2cb2-1258-47d1-a4d1-41a9f7698f34/acme-account-cdm/1.0.3/acme-account-cdm.raml
+
+/accounts:
+  post:
+    is: [coreLib.trackable, coreLib.clientIdRequired]
+    description: Create new account in Salesforce
+    body:
+      application/json:
+        type: accountCDMLib.accountType
+        properties:
+          number: 
+            required: true
+          email:
+            required: true
+        example: !include /examples/createAccountRequest.raml
+    responses:
+      201:
+        body:
+          type: coreLib.postSuccess
+          example: !include /examples/createAccountSuccessResponse.raml
+  /{account_id}:
+    uriParameters:
+      account_id:
+        type: string
+        displayName: Account ID
+        description: Account Id to be retrived, updated or deleted.
+        example: 0019000000DmehK
+    put:
+      displayName: Updates an account object in Salesforce
+      is: [coreLib.trackable, coreLib.clientIdRequired]
+      body:
+        application/json:
+          type: accountCDMLib.accountType
+          example: !include /examples/updateAccountRequest.raml
+      responses:
+        200:
+          body:
+            type: coreLib.postSuccess
+            example: !include /examples/updateAccountSuccessResponse.raml
