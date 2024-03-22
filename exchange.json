@@ -11,12 +11,6 @@
       "assetId": "lm-acme-account-cdm",
       "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
       "provided": false
-    },
-    {
-      "version": "1.0.7",
-      "assetId": "common-raml-fragments",
-      "groupId": "c09b2cb2-1258-47d1-a4d1-41a9f7698f34",
-      "provided": false
     }
   ],
   "version": "1.0.0",
