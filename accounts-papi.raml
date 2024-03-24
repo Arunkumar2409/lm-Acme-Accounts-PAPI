@@ -15,7 +15,7 @@ uses:
   securedBy:
     - coreLib.token
   post:
-    displayName: upd
+    displayName: Enter data
     is: [coreLib.trackable, coreLib.clientIdRequired]
     description: Create new account in Salesforce
     body:
@@ -33,6 +33,8 @@ uses:
           type: coreLib.postSuccess
           example: !include /examples/createAccountSuccessResponse.raml
   /{account_id}:
+    securedBy:
+      - 
     uriParameters:
       account_id:
         type: string
