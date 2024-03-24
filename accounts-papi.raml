@@ -34,7 +34,7 @@ uses:
           example: !include /examples/createAccountSuccessResponse.raml
   /{account_id}:
     securedBy:
-      - 
+      - coreLib.token
     uriParameters:
       account_id:
         type: string
@@ -42,6 +42,7 @@ uses:
         description: Account Id to be retrived, updated or deleted.
         example: 0019000000DmehK
     put:
+      description: update data
       displayName: Updates an account object in Salesforce
       is: [coreLib.trackable, coreLib.clientIdRequired]
       body:
@@ -50,6 +51,9 @@ uses:
           example: !include /examples/updateAccountRequest.raml
       responses:
         200:
+          description: 200 response
+          headers:
+            
           body:
             type: coreLib.postSuccess
             example: !include /examples/updateAccountSuccessResponse.raml
