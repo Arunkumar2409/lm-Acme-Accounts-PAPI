@@ -41,7 +41,7 @@
   "classifier": "raml",
   "main": "accounts-papi.raml",
   "assetId": "lm-acme-accounts-papi",
-  "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
+  "groupId": "2e05ecc9-d5ac-469b-9f73-a9279cdf16be",
   "organizationId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
   "name": "lm-Acme-Accounts-PAPI"
 }
