@@ -11,12 +11,6 @@
       "assetId": "lm-acme-common-raml-fragements",
       "groupId": "2e05ecc9-d5ac-469b-9f73-a9279cdf16be",
       "provided": false
-    },
-    {
-      "version": "1.0.0",
-      "assetId": "lm-acme-common-raml-fragements",
-      "groupId": "3dd74a50-f0b5-458a-aec7-d345b15ac3e7",
-      "provided": false
     }
   ],
   "version": "1.0.0",
