@@ -13,8 +13,9 @@ uses:
 
 /accounts:
   securedBy:
-    - coreLib.
+    - coreLib.token
   post:
+    displayName: upd
     is: [coreLib.trackable, coreLib.clientIdRequired]
     description: Create new account in Salesforce
     body:
