@@ -12,6 +12,8 @@ uses:
   accountCDMLib: /exchange_modules/2e05ecc9-d5ac-469b-9f73-a9279cdf16be/lm-acme-account-cdm/1.0.0/acme-account-cdm.raml
 
 /accounts:
+  securedBy:
+    - coreLib.
   post:
     is: [coreLib.trackable, coreLib.clientIdRequired]
     description: Create new account in Salesforce
