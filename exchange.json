@@ -1,16 +1,37 @@
 {
   "dependencies": [
     {
-      "version": "1.0.0",
-      "assetId": "lm-acme-account-cdm",
-      "groupId": "2e05ecc9-d5ac-469b-9f73-a9279cdf16be",
-      "provided": false
+      "version": "1.6.1",
+      "assetId": "anypoint-best-practices",
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "provided": false,
+      "scope": "validation"
+    },
+    {
+      "version": "1.1.0",
+      "assetId": "authentication-security-best-practices",
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "provided": false,
+      "scope": "validation"
     },
     {
       "version": "1.0.1",
       "assetId": "lm-acme-common-raml-fragements",
       "groupId": "2e05ecc9-d5ac-469b-9f73-a9279cdf16be",
       "provided": false
+    },
+    {
+      "version": "1.0.0",
+      "assetId": "lm-acme-account-cdm",
+      "groupId": "2e05ecc9-d5ac-469b-9f73-a9279cdf16be",
+      "provided": false
+    },
+    {
+      "version": "1.2.0",
+      "assetId": "https-enforcement",
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "provided": false,
+      "scope": "validation"
     }
   ],
   "version": "1.0.0",
