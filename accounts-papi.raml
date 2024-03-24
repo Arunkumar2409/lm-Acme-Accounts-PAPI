@@ -29,6 +29,9 @@ uses:
         example: !include /examples/createAccountRequest.raml
     responses:
       201:
+        description: 201 response
+        headers:
+          
         body:
           type: coreLib.postSuccess
           example: !include /examples/createAccountSuccessResponse.raml
@@ -53,7 +56,8 @@ uses:
         200:
           description: 200 response
           headers:
-            
+            Content-Type:
+              description: content-type
           body:
             type: coreLib.postSuccess
             example: !include /examples/updateAccountSuccessResponse.raml
