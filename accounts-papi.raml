@@ -36,11 +36,11 @@ uses:
         body:
           type: coreLib.postSuccess
           example: !include /examples/createAccountSuccessResponse.raml
-  /{account_id}:
+  /{accountid}:
     securedBy:
       - coreLib.token
     uriParameters:
-      account_id:
+      accountid:
         type: string
         displayName: Account ID
         description: Account Id to be retrived, updated or deleted.
