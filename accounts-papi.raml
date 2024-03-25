@@ -79,4 +79,13 @@ types:
       description: Retrieve an country object from first country lookup
       displayName: Retrieve country data
       is: [coreLib.trackable, coreLib.clientIdRequired]
-
+      responses:
+        200:
+          description: 200 response
+          headers:
+            Content-Type:
+              description: content-type
+          body:
+            application/json:
+              type: countryByISO
+              example: !include /examples/getCountryByISOResponse.raml
