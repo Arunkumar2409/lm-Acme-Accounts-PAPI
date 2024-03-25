@@ -64,7 +64,9 @@ uses:
             example: !include /examples/updateAccountSuccessResponse.raml
 /countries:
   /{isocode}:
-    
+    uriParameters:
+      isocode:
+        
     securedBy:
       - coreLib.token
     get:
