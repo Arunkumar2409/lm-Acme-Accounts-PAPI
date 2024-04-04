@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<api-gateway:autodiscovery apiId="19382535" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="87153d75-b94c-467b-9439-07b64e660925" flowRef="accounts-papi-main" />
+	<import doc:name="Import" doc:id="d9929928-a77d-446b-90fc-de860bf8a533" file="lm-errorhandler.xml" />
+	<global-property doc:name="Global Property" doc:id="ca190802-ff82-4c4f-91bc-b67535ac35c7" name="env" value="config-dev" />
+	<global-property doc:name="Global Property" doc:id="a2cce3fd-e36f-4513-92c5-2cea0cdf4973" name="encryptionkey" value="TrainingMule@123" />
+	<configuration-properties doc:name="Configuration properties" doc:id="d8abd677-183d-45bd-84f4-8d1a2c3838e7" file="${env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="dc7965aa-e4d4-4c07-845c-b570b0fed609" file="${env}.yaml" key="${encryptionkey}" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="172a72c4-edaa-4a91-827b-de8d6972220e" >
+		<http:listener-connection host="${Listener.host}" port="${Listener.port}" readTimeout="${Listener.ReadTimeOut}" protocol="HTTPS" tlsContext="TLS_Context"/>
+	</http:listener-config>
+	<apikit:config outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" doc:name="Router" doc:id="ee350f2f-2122-472b-8f45-f5327e141c68" name="accounts-papi-config" api="resource::2e05ecc9-d5ac-469b-9f73-a9279cdf16be:lm-acme-accounts-papi:1.0.1:raml:zip:accounts-papi.raml" />
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="1ec5120e-be0f-45f1-aaf3-b951982fef1e" >
+		<salesforce:basic-connection username="${salesforce.username}" password="Arunkumar123" securityToken="${salesforce.securitytoken}" url="${salesforce.url}" objectTTL="${salesforce.objectTTL}" maxEntries="${salesforce.MaxEntries}"/>
+	</salesforce:sfdc-config>
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="3c4ed8c0-7d5d-4935-a77d-ab083324befd" >
+		<tls:key-store type="${keystore.type}" path="${keystore.path}" alias="${keystore.alias}" keyPassword="${secure::keystore.keyPassword}" password="${secure::keystore.password}" />
+	</tls:context>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="c49aca13-2787-45d5-b248-4c374db0063a" >
+		<http:request-connection protocol="HTTPS" tlsContext="TLS_Context1" />
+	</http:request-config>
+	<tls:context name="TLS_Context1" doc:name="TLS Context" doc:id="e6be3678-3e32-4870-a141-48f6fccfad30" >
+		<tls:trust-store path="${truststore.path}" password="${secure::truststore.password}" type="${truststore.type}" />
+	</tls:context>
+</mule>

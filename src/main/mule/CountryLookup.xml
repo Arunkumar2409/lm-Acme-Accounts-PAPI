@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="GET-flowFirstcountrylookup" doc:id="80146f6e-3b9e-40c7-b53a-3f7ef46ab408" >
+		<set-variable value="#[payload.billingAddress.countryIso]" doc:name="Set Variable" doc:id="55302aa7-4f69-473c-b5fb-fa1ce9b517e6" variableName="isoCode" />
+		<http:request method="GET" doc:name="request Call to FirstCountryLookup SAPI-GET:/countries/{isocode}" doc:id="a57d9310-6908-4340-8805-4cc64e721790" url="https://lm-first-country-lookup-sapi.us-e2.cloudhub.io/api/countries/{isocode}" target="country" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"correlationid" : correlationId,
+	"client_secret" : "A05AF3b96064463d9Ba6ba9e6B111007",
+	"client_id" : "f6440828533f4b1096d31a473df29531"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	isocode: vars.isoCode
+}]]]></http:uri-params>
+		</http:request>
+	</sub-flow>
+</mule>

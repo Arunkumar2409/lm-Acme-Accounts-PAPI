@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="impl-post:\accounts:application\json:accounts-sfdc-sapi-config" doc:id="47b0a5b8-7a3f-4290-86a0-e2d237dc49f6" >
+		<logger level="INFO" doc:name="flow start Logger" doc:id="f64d62f1-7bee-4f85-866d-8ac291c130b2" message='#["POST FLOW STARTED"]'/>
+		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="6a693631-0fb7-446e-807e-eefff4e1ed92" variableName="postData"/>
+		<flow-ref doc:name="GET-flowFirstcountrylookup" doc:id="5591a9a2-bb1e-4ca5-a63d-88d9627e4bfe" name="GET-flowFirstcountrylookup" />
+		<ee:transform doc:name="MappingResponse" doc:id="a4273d68-29ce-4268-9b78-56450d239d3a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	name: vars.postData.name,
+	phone: vars.postData.phone,
+	fax: vars.postData.fax,
+	number: vars.postData.number,
+	email: vars.postData.email,
+	billingAddress:{
+			street: vars.postData.billingAddress.street,
+			city: vars.postData.billingAddress.city,
+			state: vars.postData.billingAddress.state,
+			postalCode: vars.postData.billingAddress.postalCode,
+			country: vars.country.country		
+	        },
+   shippingAddress:{
+   		street: vars.postData.shippingAddress.street,
+		city: vars.postData.shippingAddress.city,
+		state: vars.postData.shippingAddress.state,
+		postalCode: vars.postData.shippingAddress.postalCode,
+		country: vars.country.country
+   }
+
+
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="POSTflowSub_Flow" doc:id="180ff412-12bb-4fae-bb28-9315b6a38dcf" name="POSTflowSub_Flow"/>
+		<ee:transform doc:name="response Message" doc:id="64fa4f82-fbe4-4a91-b837-3217acf1bda3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<sub-flow name="POSTflowSub_Flow" doc:id="da256ef6-1dc5-4f30-87bc-0a5740997406" >
+		<http:request method="POST" doc:name="request Call to SFDC SAPI-POST:/accounts" doc:id="a81e63b9-6676-4b58-8f86-21cbf263b090" url="https://lm-accounts-sfdc-sapi1.us-e2.cloudhub.io/api/accounts" sendBodyMode="ALWAYS" config-ref="HTTP_Request_configuration">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"correlationid" : "421cb368-066b-11e1-9647-c5be7398b24e",
+	"client_secret" : "A05AF3b96064463d9Ba6ba9e6B111007",
+	"client_id" : "f6440828533f4b1096d31a473df29531"
+}]]]></http:headers>
+		</http:request>
+	</sub-flow>
+</mule>

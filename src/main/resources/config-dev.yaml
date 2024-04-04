@@ -1,0 +1,21 @@
+Listener:
+  host: "0.0.0.0"
+  port: "8082"
+  ReadTimeOut: "30000"
+salesforce:
+  username: "arunkumar.shanmugasundaram-q2wc@force.com"
+  securitytoken: "WvlRWoBVA13n0AakVzW0Qaqt4"
+  url: "https://login.salesforce.com/services/Soap/u/59.0"
+  objectTTL: "30"
+  TimeOut: "SECONDS"
+  MaxEntries: "10"
+keystore:
+  type: "JKS"
+  password: "![2Wm3YJhFzq/AGYUnvru3hjuh1mo+tXlSTkYPEiky3oM=]"
+  keyPassword: "![2Wm3YJhFzq/AGYUnvru3hjuh1mo+tXlSTkYPEiky3oM=]"
+  alias: "mule"
+  path: "keystore.jks"
+truststore:
+  type: "JKS"
+  path: "truststore_tls1.jks"
+  password: "![2Wm3YJhFzq/AGYUnvru3hjuh1mo+tXlSTkYPEiky3oM=]"

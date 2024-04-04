@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_da256ef6_1dc5_4f30_87bc_0a5740997406_Input_Payload = Array<{|  Name: Null,   BillingStreet: Null,   BillingCity: Null,   BillingState: Null,   BillingPostalCode: Null,   BillingCountry: Null,   ShippingStreet: Null,   ShippingCity: String,   ShippingState: Null,   ShippingPostalCode: Null,   ShippingCountry: Null,   Phone: Null,   Fax: Null,   AccountNumber: Null,   Email__c: Null|}>
+

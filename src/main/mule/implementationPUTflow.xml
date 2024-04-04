@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<!-- [STUDIO:"impl-put:\accounts\(accountid):application\json:accounts-sfdc-sapi-config"]<flow name="impl-put:\accounts\(accountid):application\json:accounts-sfdc-sapi-config" doc:id="cea18fef-6140-4534-b4cb-3869294d490d">
+		<logger level="INFO" doc:name="flow start Logger" doc:id="50f35232-ee6d-4bd6-ab22-7274b1be1ae8" message='#["PUT FLOW STARTED"&#93;' />
+		<ee:transform doc:name="set variables" doc:id="b70e192f-22a9-4312-9f20-92b1acce80fc">
+			<ee:variables>
+				<ee:set-variable variableName="accountid"><![CDATA[attributes.uriParams.'accountid'&#93;&#93;></ee:set-variable>
+				<ee:set-variable variableName="getquerydata"><![CDATA[output application/java
+&#45;&#45;-
+{
+	accountid__c : vars.accountid,
+	Name : payload.name
+}&#93;&#93;></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<salesforce:query doc:name="Get the requested data from salesforce" doc:id="67649442-c35e-4ce3-ad7f-a03dcf2c8edf" config-ref="Salesforce_Config" target="getAccountsdata">
+			<salesforce:salesforce-query><![CDATA[select Name,Phone,Fax,Email__c,accountid__c,BillingAddress from Account where Id =':accountid__c' AND Name =':Name'&#93;&#93;></salesforce:salesforce-query>
+			<salesforce:parameters><![CDATA[#[output application/java
+&#45;&#45;-
+{
+	accountid__c : vars.accountid,
+	Name : payload.name
+	
+}&#93;&#93;&#93;></salesforce:parameters>
+		</salesforce:query>
+		<logger level="INFO" doc:name="Logger" doc:id="57bda152-bbc5-460f-9b26-6d83d4149a9f" message="#[vars.getAccountsdata&#93;"/>
+		<choice doc:name="Choice" doc:id="ffb6157b-b9ee-4896-89c3-1cd394712f39">
+			<when expression="#[sizeOf(vars.getAccountsdata)&gt;0&#93;">
+				<ee:transform doc:name="MappingResponse" doc:id="27c51bdc-e003-4490-9dc8-4314585e1822">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+&#45;&#45;-
+[{
+	Id: vars.accountid,
+	Name: payload.name,
+	BillingStreet: payload.billingAddress.street,
+	BillingCity: payload.billingAddress.city,
+	BillingState: payload.billingAddress.state,
+	BillingPostalCode: payload.billingAddress.postalCode,
+	BillingCountry: payload.billingAddress.country,
+	ShippingStreet: payload.shippingAddress.street,
+	ShippingCity: (payload.shippingAddress.city default ""),
+	ShippingState: payload.shippingAddress.state,
+	ShippingPostalCode: payload.shippingAddress.postalCode,
+	ShippingCountry: payload.shippingAddress.country,
+	Phone: payload.phone,
+	Fax: payload.fax,
+	AccountNumber: payload.number,
+	Email__c: payload.email
+}&#93;&#93;&#93;></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<salesforce:upsert objectType="Account" externalIdFieldName="Id" doc:name="Upsert data to salesforce Acounts" doc:id="04818114-06b6-423a-9ec7-e5a74fc62435" config-ref="Salesforce_Config" />
+				<ee:transform doc:name="responseMessage" doc:id="c58c9388-37c6-46d7-b10e-d5211713e444">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+&#45;&#45;-
+{
+  id: "0015j00000VNSljAAH",
+  status: 0,
+  message: "Account updated successfully"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}&#93;&#93;></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise>
+				<ee:transform doc:name="responseMapping" doc:id="c5e24d3c-550f-450f-801b-b10dfe221121">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+&#45;&#45;-
+{
+	"ID": vars.accountid,
+	"Name": vars.getquerydata.Name,
+	"Status": "No Matched Data Found for the above ID and Name"
+}&#93;&#93;></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="INFO" doc:name="responseMessage" doc:id="c5cd5b3d-05ec-4672-9ff5-3830d43cae30" message="#[payload&#93;" />
+			</otherwise>
+		</choice>
+	</flow> [STUDIO] -->
+	<sub-flow name="PUTflowSub_Flow" doc:id="9a791e69-64d0-4f07-b52c-5fdf079fb71b" >
+		<http:request method="PUT" doc:name="request Call to SFDC SAPI-PUT:/accounts" doc:id="86cb767e-f6a0-4ded-ba80-29b6e1e8422c" url="https://lm-accounts-sfdc-sapi1.us-e2.cloudhub.io/api/accounts/{accountid}" sendBodyMode="ALWAYS" config-ref="HTTP_Request_configuration">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"correlationid" : "421cb368-066b-11e1-9647-c5be7398b24e",
+	"client_secret" : "A05AF3b96064463d9Ba6ba9e6B111007",
+	"client_id" : "f6440828533f4b1096d31a473df29531"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"accountid" : vars.accountid
+}]]]></http:uri-params>
+		</http:request>
+	</sub-flow>
+	<flow name="impl-put:\accounts:application\json:accounts-sfdc-sapi-config" doc:id="825d23b5-384e-47a5-b647-13f204454900" >
+		<logger level="INFO" doc:name="flow start Logger" doc:id="27067a8e-8284-4c20-9d79-6d6cdebaa828" message='#["PUT FLOW STARTED"]' />
+		<set-variable value="#[attributes.uriParams.accountid]" doc:name="Set Variable" doc:id="55349a29-a63d-4a47-a202-da5a53099e97" variableName="accountid"/>
+		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="5acb82f6-0839-4f94-932f-b585fe613f33" variableName="postData" />
+		<flow-ref doc:name="GET-flowFirstcountrylookup" doc:id="c1130347-8e83-4308-beb7-c83dff241eaf" name="GET-flowFirstcountrylookup" />
+		<ee:transform doc:name="MappingResponse" doc:id="869d8712-80d0-4091-a43a-971cfece20de" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	name: vars.postData.name,
+	phone: vars.postData.phone,
+	fax: vars.postData.fax,
+	number: vars.postData.number,
+	email: vars.postData.email,
+	billingAddress:{
+			street: vars.postData.billingAddress.street,
+			city: vars.postData.billingAddress.city,
+			state: vars.postData.billingAddress.state,
+			postalCode: vars.postData.billingAddress.postalCode,
+			country: vars.country.country		
+	        },
+   shippingAddress:{
+   		street: vars.postData.shippingAddress.street,
+		city: vars.postData.shippingAddress.city,
+		state: vars.postData.shippingAddress.state,
+		postalCode: vars.postData.shippingAddress.postalCode,
+		country: vars.country.country
+   }
+
+
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="POSTflowSub_Flow" doc:id="0b00088c-c591-4a92-ad64-37efde09b711" name="PUTflowSub_Flow" />
+		<ee:transform doc:name="response Message" doc:id="1c3a2eae-2410-4d1f-80f0-297f92a458fd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="flow End Logger" doc:id="b8e826a4-65f5-4c74-9571-33d2a1aa092f" message='#["PUT FLOW ENDED"]' />
+	</flow>
+</mule>
